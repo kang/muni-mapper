@@ -1,0 +1,27 @@
+.background {
+  fill: #9cd7ff;
+}
+
+.neighborhood {
+  stroke: #d3d3d3;
+  fill: #d3d3d3;
+}
+
+.street {
+  stroke: #fff;
+  stroke-opacity: 0.8;
+  fill: #d3d3d3;
+}
+
+.artery {
+  stroke: green;
+  stroke-opacity: 0.8;
+  fill: #d3d3d3;
+}
+
+.freeway {
+  stroke: orange;
+  stroke-opacity: 0.8;
+  fill: yellow;
+  fill-opacity: 0.5;
+}
