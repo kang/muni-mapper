@@ -1,2 +1,2 @@
-export const FETCH_MUNI = 'FETCH_MUNI';
-export const RECEIVE_MUNI = 'RECEIVE_MUNI';
+export const MUNI_FETCH_REQUEST = 'MUNI_FETCH_REQUEST';
+export const MUNI_FETCH_RECEIVE = 'MUNI_FETCH_RECEIVE';

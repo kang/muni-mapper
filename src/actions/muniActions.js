@@ -7,16 +7,17 @@ const composeUrl = (lastTime = 0) => (
 );
 
 const fetchMuni = lastTime => (
-  // TODO - rewrite with redux-saga
-  dispatch => (
-    fetch(composeUrl(lastTime))
+  dispatch => {
+    dispatch({ type: types.MUNI_FETCH_REQUEST, lastTime });
+    
+    return fetch(composeUrl(lastTime))
       .then(response => response.json())
-      .then(json => dispatch(receiveMuni(json)))
-  )
+      .then(json => dispatch(receiveMuni(json)));
+  }
 );
 
 const receiveMuni = json => ({
-  type: types.RECEIVE_MUNI,
+  type: types.MUNI_FETCH_RECEIVE,
   vehicles: json.vehicle,
   lastTime: json.lastTime.time
 });
