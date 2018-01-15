@@ -30,7 +30,6 @@ class VehicleMapper extends PureComponent<Props, State> {
 
     this.state = { filter: '' };
 
-    this.renderRouteSelector = this.renderRouteSelector.bind(this);
     this.handleFilterChange = this.handleFilterChange.bind(this);
   }
 
@@ -51,50 +50,36 @@ class VehicleMapper extends PureComponent<Props, State> {
   }
 
   render() {
-    let filteredVehicles = this.props.muni.vehicles;
-
-    if (this.state.filter) {
-      filteredVehicles = this.props.muni.vehicles.filter(vehicle => (
-        vehicle.routeTag === this.state.filter
-      ));
-    }
-
     const size = { width: 960, height: 600 };
+    const filter = this.state.filter;
+    const vehicles = this.props.muni.vehicles;
+    const filteredVehicles = filter ? vehicles.filter(vehicle => vehicle.routeTag === filter) : vehicles;
 
-    return (
-      <div className="VehicleMapper">
-        <MapLayer size={size} />
-        <VehicleLayer vehicles={filteredVehicles} size={size} />
-        {this.renderRouteSelector()}
-      </div>
-    );
-  }
-
-  renderRouteSelector() {
     const routeSet = new Set();
-    this.props.muni.vehicles.forEach(vehicle => {
+    vehicles.forEach(vehicle => {
       routeSet.add(vehicle.routeTag);
     });
     const routeList = Array.from(routeSet);
 
     return (
-      <label className="VehicleMapper-filter-selector">
-        Filter by route: &nbsp;
-        <select value={this.state.filter} onChange={this.handleFilterChange}>
-          <option value=''>All</option>
-          {routeList.map(route => (
-            <option key={route} value={route}>{route}</option>
-          ))}
-        </select>
-      </label>
+      <div className="VehicleMapper">
+        <MapLayer size={size} />
+        <VehicleLayer vehicles={filteredVehicles} size={size} />
+
+        <label className="VehicleMapper-filter-selector">
+          Filter by route: &nbsp;
+          <select value={this.state.filter} onChange={this.handleFilterChange}>
+            <option value=''>All</option>
+            {routeList.map(route => (
+              <option key={route} value={route}>{route}</option>
+            ))}
+          </select>
+        </label>
+      </div>
     );
   }
 }
 
 const mapStateToProps = state => ({ muni: state.vehicle });
-
-const mapDispatchToProps = dispatch => (bindActionCreators({
-  fetchVehicles
-}, dispatch));
-
+const mapDispatchToProps = dispatch => (bindActionCreators({ fetchVehicles }, dispatch));
 export default connect(mapStateToProps, mapDispatchToProps)(VehicleMapper);
