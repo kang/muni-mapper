@@ -11,7 +11,7 @@ const muni = (state = initialState, action) => {
 
       // create old vehicle map to reduce lookup time and add old vehicles to the updated list
       state.vehicles.forEach((vehicle, i) => {
-        oldVehicleMap[vehicle.id] = i;
+        oldVehicleMap[vehicle.id] = updatedVehicles.length;
         updatedVehicles.push(vehicle);
       });
       // replace old vehicles if it exists (using the map) or push onto the list

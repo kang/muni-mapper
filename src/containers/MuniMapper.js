@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import muniActions from '../actions/muniActions';
-import Map from '../components/Map';
-import Vehicles from '../components/Vehicles';
+import MapLayer from '../components/MapLayer';
+import VehicleLayer from '../components/VehicleLayer';
 import './MuniMapper.css';
 
 type Props = {
@@ -37,13 +37,13 @@ class MuniMapper extends Component<Props, State> {
   componentDidMount() {
     this.props.fetchMuni();
 
-    // this.muniFetcher = window.setInterval(() => {
-    //   this.props.fetchMuni(this.props.muni.lastTime);
-    // }, 15000);
+    this.muniFetcher = window.setInterval(() => {
+      this.props.fetchMuni(this.props.muni.lastTime);
+    }, 15000);
   }
 
   componentWillUnmount() {
-    // clearInterval(this.muniFetcher);
+    clearInterval(this.muniFetcher);
   }
 
   handleFilterChange(e) {
@@ -59,10 +59,12 @@ class MuniMapper extends Component<Props, State> {
       ));
     }
 
+    const size = { width: 960, height: 600 };
+
     return (
       <div className="MuniMapper">
-        <Map />
-        <Vehicles vehicles={filteredVehicles} />
+        <MapLayer size={size} />
+        <VehicleLayer vehicles={filteredVehicles} size={size} />
         {this.renderRouteSelector()}
       </div>
     );
@@ -77,7 +79,7 @@ class MuniMapper extends Component<Props, State> {
 
     return (
       <label className="MuniMapper-filter-selector">
-        Filter by route:
+        Filter by route: &nbsp;
         <select value={this.state.filter} onChange={this.handleFilterChange}>
           <option value=''>All</option>
           {routeList.map(route => (
