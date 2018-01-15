@@ -1,9 +1,9 @@
 // @flow
 import { combineReducers } from 'redux';
-import muni from './muniReducer';
+import vehicle from './vehicleReducer';
 
 const rootReducer = combineReducers({
-  muni,
+  vehicle,
 });
 
 export default rootReducer;

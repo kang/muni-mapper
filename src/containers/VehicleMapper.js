@@ -1,14 +1,14 @@
 // @flow
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import muniActions from '../actions/muniActions';
+import { fetchVehicles } from '../actions/vehicleActions';
 import MapLayer from '../components/MapLayer';
 import VehicleLayer from '../components/VehicleLayer';
-import './MuniMapper.css';
+import './VehicleMapper.css';
 
 type Props = {
-  fetchMuni: () => void,
+  fetchVehicles: () => void,
   muni: {
     vehicles: Array<{
       lat: string,
@@ -24,7 +24,7 @@ type State = {
   filter: string
 };
 
-class MuniMapper extends Component<Props, State> {
+class VehicleMapper extends PureComponent<Props, State> {
   constructor(props: any) {
     super(props);
 
@@ -35,10 +35,10 @@ class MuniMapper extends Component<Props, State> {
   }
 
   componentDidMount() {
-    this.props.fetchMuni();
+    this.props.fetchVehicles();
 
     this.muniFetcher = window.setInterval(() => {
-      this.props.fetchMuni(this.props.muni.lastTime);
+      this.props.fetchVehicles(this.props.muni.lastTime);
     }, 15000);
   }
 
@@ -62,7 +62,7 @@ class MuniMapper extends Component<Props, State> {
     const size = { width: 960, height: 600 };
 
     return (
-      <div className="MuniMapper">
+      <div className="VehicleMapper">
         <MapLayer size={size} />
         <VehicleLayer vehicles={filteredVehicles} size={size} />
         {this.renderRouteSelector()}
@@ -78,7 +78,7 @@ class MuniMapper extends Component<Props, State> {
     const routeList = Array.from(routeSet);
 
     return (
-      <label className="MuniMapper-filter-selector">
+      <label className="VehicleMapper-filter-selector">
         Filter by route: &nbsp;
         <select value={this.state.filter} onChange={this.handleFilterChange}>
           <option value=''>All</option>
@@ -91,10 +91,10 @@ class MuniMapper extends Component<Props, State> {
   }
 }
 
-const mapStateToProps = state => ({ muni: state.muni });
+const mapStateToProps = state => ({ muni: state.vehicle });
 
 const mapDispatchToProps = dispatch => (bindActionCreators({
-  fetchMuni: muniActions.fetchMuni
+  fetchVehicles
 }, dispatch));
 
-export default connect(mapStateToProps, mapDispatchToProps)(MuniMapper);
+export default connect(mapStateToProps, mapDispatchToProps)(VehicleMapper);

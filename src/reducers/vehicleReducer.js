@@ -1,11 +1,11 @@
 import initialState from './initialState';
-import { MUNI_FETCH_REQUEST, MUNI_FETCH_RECEIVE } from '../actions/actionTypes';
+import { VEHICLES_FETCH_REQUEST, VEHICLES_FETCH_SUCCESS } from '../actions/vehicleActions';
 
-const muni = (state = initialState, action) => {
+const vehicle = (state = initialState, action) => {
   switch (action.type) {
-    case MUNI_FETCH_REQUEST:
+    case VEHICLES_FETCH_REQUEST:
       return state;
-    case MUNI_FETCH_RECEIVE:
+    case VEHICLES_FETCH_SUCCESS:
       const oldVehicleMap = {};
       const updatedVehicles = [];
 
@@ -31,4 +31,4 @@ const muni = (state = initialState, action) => {
   }
 }
 
-export default muni;
+export default vehicle;

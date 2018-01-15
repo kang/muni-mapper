@@ -1,9 +1,9 @@
-.MuniMapper {
+.VehicleMapper {
   position: relative;
   width: 960px;
 }
 
-.MuniMapper-filter-selector {
+.VehicleMapper-filter-selector {
   position: absolute;
   right: 15px;
   top: 15px;
