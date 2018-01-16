@@ -2,11 +2,11 @@ import { put, call, takeEvery } from 'redux-saga/effects';
 import * as actions from '../actions/vehicleActions';
 import api from '../services';
 
-const composeUrl = (lastTime = 0) => (
+export const composeUrl = (lastTime = 0) => (
   `http://webservices.nextbus.com/service/publicJSONFeed?command=vehicleLocations&a=sf-muni&t=${lastTime}`
 );
 
-function* getVehicles({ lastTime }) {
+export function* getVehicles({ lastTime }) {
     try {
       const vehicles = yield call(api.getVehicles, composeUrl(lastTime));
       yield put(actions.fetchVehiclesSuccess(vehicles));
